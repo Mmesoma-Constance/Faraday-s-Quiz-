@@ -3,11 +3,11 @@ const questions = [
     q: "A region around a magnet where a magnetic force is felt is called?",
     options: [
       "A. Magnetic field",
-      "B. Electric Field",
+      "B. Electric field",
       "C. Gravitational field",
       "D. Electric potential",
     ],
-    answer: "B",
+    answer: "A",
   },
   {
     q: "Electric field is caused by?",
@@ -110,6 +110,7 @@ startBtn.onclick = () => {
 function showQuestion() {
   const q = shuffled[current];
   questionText.textContent = `Question ${current + 1}: ${q.q}`;
+  questionText.classList.add("platypi");
   progressText.textContent = `${current + 1}/${shuffled.length}`;
   optionsBox.innerHTML = "";
   nextBtn.classList.toggle("hidden", !selectedAnswers[current]);
@@ -117,6 +118,7 @@ function showQuestion() {
   q.options.forEach((opt) => {
     const btn = document.createElement("button");
     btn.textContent = opt;
+    btn.classList.add("platypi");
     if (selectedAnswers[current] === opt) btn.classList.add("selected");
     btn.onclick = () => {
       selectedAnswers[current] = opt;
