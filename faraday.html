@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faraday Quiz</title>
+    <link rel="stylesheet" href="faraday.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amarante&family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Carter+One&family=Caveat+Brush&family=Jaro:opsz@6..72&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Platypi:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita+Swashed:wght@300..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Shrikhand&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="platypi">
+    <div class="quiz-container platypi">
+      <header class="quiz-name carter-one-regular">
+        <h2>Faraday's Quiz</h2>
+      </header>
+      <hr />
+      <div class="container platypi">
+        <!-- Setup Screen -->
+        <div id="setup">
+          <label
+            >Number of questions:
+            <input
+              type="number"
+              id="question-count"
+              min="1"
+              max="10"
+              value="5"
+            /> </label
+          ><br /><br />
+          <label
+            >Time:
+            <select id="minutes">
+              <option value="0">00</option>
+              <option value="1" selected>01</option>
+              <option value="2">02</option>
+              <option value="3">03</option>
+              <option value="4">04</option>
+              <option value="5">05</option>
+              <option value="6">06</option>
+              <option value="7">07</option>
+              <option value="8">08</option>
+              <option value="9">09</option>
+              <option value="10">10</option>
+            </select>
+            :
+            <select id="seconds">
+              <option value="0">00</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select> </label
+          ><br /><br />
+          <button class="platypi" id="continue-btn">Continue</button>
+        </div>
+
+        <!-- Confirmation -->
+        <div id="confirmation" class="hidden platypi">
+          <p id="confirm-text"></p>
+          <div class="btn-container platypi">
+            <button id="back-btn">Back</button>
+            <button id="start-btn">Start Quiz</button>
+          </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz" class="hidden platypi">
+          <div class="progress">
+            <span id="progress-text"></span>
+            <h4 class="time-content">Time: <span id="time-text"></span></h4>
+          </div>
+          <div class="question platypi" id="question-text"></div>
+          <div class="options platypi" id="options"></div>
+          <div class="nav-buttons platypi">
+            <button id="prev-btn" class="hidden">Prev</button>
+            <button id="next-btn" class="hidden">Next</button>
+          </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result" class="hidden">
+          <div class="result">Your Score: <span id="score-text"></span></div>
+          <div class="result">Grade: <span id="grade-text"></span></div>
+          <div class="percentage" id="percentage-text"></div>
+          <div class="message" id="message-text"></div>
+          <br />
+          <div class="btn-container">
+            <button id="review-btn">Check Answers</button>
+            <button id="restart-btn">Start Again</button>
+          </div>
+
+          <div id="review" class="hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="faraday.js"></script>
+  </body>
+</html>
