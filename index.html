@@ -2,103 +2,400 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faraday Quiz</title>
-    <link rel="stylesheet" href="faraday.css" />
+    <title>Faraday's Quiz</title>
+    <script
+      src="https://kit.fontawesome.com/5a0914105d.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Amarante&family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Carter+One&family=Caveat+Brush&family=Jaro:opsz@6..72&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Platypi:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita+Swashed:wght@300..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Shrikhand&family=Special+Elite&display=swap"
       rel="stylesheet"
     />
+    <style>
+      body {
+        /* background-image: radial-gradient(circle, #b6ba50, #226d58); */
+        background: white;
+        font-family: Arial, sans-serif;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      /* font family */
+
+      .platypi {
+        font-family: "Platypi", serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .carter-one-regular {
+        font-family: "Carter One", system-ui;
+        font-weight: 100;
+        font-style: normal;
+      }
+
+      #quizContainer {
+        width: 600px;
+        margin: 20px;
+
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+      }
+
+      .questionBox {
+        padding: 6px;
+        font-size: 1.2em;
+        width: 100%;
+      }
+
+      .questionNumber {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #444;
+      }
+
+      .question {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      .option {
+        padding: 12px 12px 12px 20px;
+        margin: 12px 0;
+        border: 2px solid #ddd;
+        border-radius: 50px;
+        cursor: default;
+      }
+
+      .highlight {
+        border: 3px solid green;
+        background: #e6ffe6;
+        font-weight: bold;
+      }
+
+      #status {
+        /* margin-top: 250px; */
+        font-style: italic;
+        color: #555;
+        text-align: center;
+      }
+
+      #result {
+        display: none;
+        text-align: center;
+        font-size: 22px;
+        /* margin-top: 30px; */
+        padding: 20px;
+        border-radius: 10px;
+        background: #dff0d8;
+        color: #3c763d;
+      }
+
+      .slide-out-right-fade {
+        animation: slideOutRightFade 0.5s forwards;
+      }
+
+      .slide-in-left {
+        animation: slideInLeft 0.5s forwards;
+      }
+
+      @keyframes slideOutRightFade {
+        0% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+
+      @keyframes slideInLeft {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      #controls {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .btn {
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        margin: 0 10px;
+        background: #3c763d;
+        color: white;
+        border-radius: 50px;
+        padding: 6px 20px;
+      }
+
+      #startScreen {
+        text-align: center;
+      }
+
+      #rangeSelect {
+        padding: 10px;
+        font-size: 16px;
+      }
+    </style>
   </head>
-  <body class="platypi">
-    <div class="quiz-container platypi">
-      <header class="quiz-name carter-one-regular">
-        <h2>Faraday's Quiz</h2>
-      </header>
-      <hr />
-      <div class="container platypi">
-        <!-- Setup Screen -->
-        <div id="setup">
-          <label
-            >Number of questions:
-            <input
-              type="number"
-              id="question-count"
-              min="1"
-              max="10"
-              value="5"
-            /> </label
-          ><br /><br />
-          <label
-            >Time:
-            <select id="minutes">
-              <option value="0">00</option>
-              <option value="1" selected>01</option>
-              <option value="2">02</option>
-              <option value="3">03</option>
-              <option value="4">04</option>
-              <option value="5">05</option>
-              <option value="6">06</option>
-              <option value="7">07</option>
-              <option value="8">08</option>
-              <option value="9">09</option>
-              <option value="10">10</option>
-            </select>
-            :
-            <select id="seconds">
-              <option value="0">00</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-            </select> </label
-          ><br /><br />
-          <button class="platypi" id="continue-btn">Continue</button>
-        </div>
+  <body>
+    <div id="quizContainer" class="platypi">
+      <div id="startScreen" class="platypi">
+        <h2>Select question range:</h2>
+        <select id="rangeSelect" class="platypi">
+          <option value="0-2">Questions 1 – 3</option>
+          <option value="3-4">Questions 4 – 5</option>
+        </select>
+        <br /><br />
+        <button onclick="startQuiz()" class="platypi btn">Start Quiz</button>
+        <br /><br />
+        <button id="muteBtn" onclick="toggleMute()">
+          <i class="fas fa-volume-up"></i>
+        </button>
+      </div>
 
-        <!-- Confirmation -->
-        <div id="confirmation" class="hidden platypi">
-          <p id="confirm-text"></p>
-          <div class="btn-container platypi">
-            <button id="back-btn" class="platypi">Back</button>
-            <button id="start-btn" class="platypi">Start Quiz</button>
-          </div>
-        </div>
+      <div
+        id="questionBox"
+        class="questionBox platypi"
+        style="display: none"
+      ></div>
+      <div id="status"></div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz" class="hidden platypi">
-          <div class="progress">
-            <span id="progress-text"></span>
-            <h4 class="time-content">Time: <span id="time-text"></span></h4>
-          </div>
-          <div class="question platypi" id="question-text"></div>
-          <div class="options platypi" id="options"></div>
-          <div class="nav-buttons platypi">
-            <button id="prev-btn" class="hidden platypi">Prev</button>
-            <button id="next-btn" class="hidden platypi">Next</button>
-          </div>
-        </div>
+      <div id="controls" style="display: none">
+        <button id="toggleBtn" onclick="togglePauseResume()">
+          <i class="fas fa-pause"></i>
+        </button>
+      </div>
 
-        <!-- Result Screen -->
-        <div id="result" class="hidden">
-          <div class="result">Your Score: <span id="score-text"></span></div>
-          <div class="result">Grade: <span id="grade-text"></span></div>
-          <div class="percentage" id="percentage-text"></div>
-          <div class="message" id="message-text"></div>
-          <br />
-          <div class="btn-container">
-            <button id="review-btn" class="platypi">Check Answers</button>
-            <button id="restart-btn" class="platypi">Start Again</button>
-          </div>
-
-          <div id="review" class="hidden"></div>
-        </div>
+      <div id="result" class="platypi">
+        <div class="platypi">Quiz Completed.</div>
+        <br />
+        <button onclick="restartQuiz()" class="platypi btn">
+          Take Quiz Again
+        </button>
       </div>
     </div>
 
-    <script src="faraday.js"></script>
+    <script>
+      const allQuestions = [
+        {
+          question:
+            "A region around a magnet where a magnetic force is felt is called?",
+          options: [
+            "Magnetic field",
+            "Electric field",
+            "Gravitational field",
+            "Electric potential",
+          ],
+          correct: 0,
+        },
+        {
+          question: "Electric field is caused by?",
+          options: ["Current", "Charge", "Mass", "Velocity", "None"],
+          correct: 1,
+        },
+        {
+          question: "Fleming right hand is applied in?",
+          options: [
+            "Electric motors",
+            "Electric generators",
+            "Conductance",
+            "Mechanism",
+            "None",
+          ],
+          correct: 1,
+        },
+        {
+          question: "A point where current spilt in a circuit is called?",
+          options: ["Node", "Anti node", "Current splitter", "None"],
+          correct: 0,
+        },
+      ];
+
+      let selectedQuestions = [];
+      let currentIndex = 0;
+      let score = 0;
+      let pause = false;
+      let muted = false;
+      let timers = [];
+
+      const labels = ["A", "B", "C", "D", "E"];
+
+      const quizContainer = document.getElementById("quizContainer");
+      const questionBox = document.getElementById("questionBox");
+      const status = document.getElementById("status");
+      const resultBox = document.getElementById("result");
+      const controls = document.getElementById("controls");
+      const startScreen = document.getElementById("startScreen");
+      const rangeSelect = document.getElementById("rangeSelect");
+      const toggleBtn = document.getElementById("toggleBtn");
+      const toggleIcon = toggleBtn.querySelector("i");
+      const muteBtn = document.getElementById("muteBtn");
+      const muteIcon = muteBtn.querySelector("i");
+
+      function speak(text, callback = null) {
+        if (muted) {
+          const delay = text.split(" ").length * 300;
+          const silentTimer = setTimeout(() => {
+            if (callback) callback();
+          }, delay);
+          timers.push(silentTimer);
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1;
+        utterance.lang = "en-US";
+        utterance.onend = () => callback && callback();
+        speechSynthesis.speak(utterance);
+      }
+
+      function createQuestionBox(index) {
+        const q = selectedQuestions[index];
+        const box = document.createElement("div");
+        box.className = "questionBox slide-in-left";
+        box.innerHTML = `
+          <div class="questionNumber">Question ${index + 1} of ${
+          selectedQuestions.length
+        }</div>
+          <div class="question">${q.question}</div>
+          ${q.options
+            .map(
+              (opt, i) => `
+            <div class="option" id="opt-${i}"><strong>${labels[i]}.</strong> ${opt}</div>
+          `
+            )
+            .join("")}
+        `;
+        return box;
+      }
+
+      function highlightCorrect(index) {
+        const q = selectedQuestions[index];
+        const correctDiv = document.getElementById(`opt-${q.correct}`);
+        if (correctDiv) correctDiv.classList.add("highlight");
+      }
+
+      function togglePauseResume() {
+        pause = !pause;
+        if (pause) {
+          timers.forEach((t) => clearTimeout(t));
+          speechSynthesis.cancel();
+          toggleIcon.classList.remove("fa-pause");
+          toggleIcon.classList.add("fa-play");
+        } else {
+          toggleIcon.classList.remove("fa-play");
+          toggleIcon.classList.add("fa-pause");
+          playQuiz(currentIndex);
+        }
+      }
+
+      function toggleMute() {
+        muted = !muted;
+        muteIcon.classList.toggle("fa-volume-up", !muted);
+        muteIcon.classList.toggle("fa-volume-mute", muted);
+        if (muted) {
+          speechSynthesis.cancel();
+        }
+      }
+
+      function playQuiz(index) {
+        if (pause) return;
+
+        if (index >= selectedQuestions.length) {
+          showFinalScore();
+          return;
+        }
+
+        currentIndex = index;
+
+        const oldBox = document.getElementById("questionBox");
+        if (oldBox) oldBox.classList.add("slide-out-right-fade");
+
+        setTimeout(() => {
+          if (oldBox) oldBox.remove();
+
+          const newBox = createQuestionBox(index);
+          newBox.id = "questionBox";
+          newBox.style.display = "block";
+          quizContainer.insertBefore(newBox, status);
+
+          const q = selectedQuestions[index];
+          speak(q.question, () => {
+            if (pause) return;
+
+            const thinkPause = setTimeout(() => {
+              if (pause) return;
+              const answer = q.options[q.correct];
+              speak(
+                "The correct answer is " + labels[q.correct] + ". " + answer
+              );
+              highlightCorrect(index);
+
+              const nextTimer = setTimeout(() => {
+                if (!pause) playQuiz(index + 1);
+              }, 3000);
+
+              timers.push(nextTimer);
+            }, 3000);
+
+            timers.push(thinkPause);
+          });
+        }, 500);
+      }
+
+      function showFinalScore() {
+        const qbox = document.getElementById("questionBox");
+        if (qbox) qbox.remove();
+        resultBox.style.display = "block";
+        controls.style.display = "none";
+        status.textContent = "";
+        speak("Quiz completed.");
+      }
+
+      function startQuiz() {
+        const [start, end] = rangeSelect.value.split("-").map(Number);
+        selectedQuestions = allQuestions.slice(start, end + 1);
+        startScreen.style.display = "none";
+        muteBtn.style.display = "none"; // ✅ Hide mute button during quiz
+        controls.style.display = "block";
+        questionBox.style.display = "block";
+        resultBox.style.display = "none";
+        currentIndex = 0;
+        score = 0;
+        pause = false;
+        timers = [];
+        toggleIcon.classList.remove("fa-play");
+        toggleIcon.classList.add("fa-pause");
+        playQuiz(0);
+      }
+
+      function restartQuiz() {
+        resultBox.style.display = "none";
+        startScreen.style.display = "block";
+        muteBtn.style.display = "inline-block"; // ✅ Show mute button again
+        status.textContent = "";
+      }
+    </script>
   </body>
 </html>
