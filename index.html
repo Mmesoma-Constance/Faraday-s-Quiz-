@@ -15,18 +15,98 @@
     />
     <style>
       body {
-        /* background-image: radial-gradient(circle, #b6ba50, #226d58); */
         background: white;
         font-family: Arial, sans-serif;
-
+        font-size: 1.5em;
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
       }
 
-      /* font family */
+      /* Responsive: Reduce font size on larger screens */
+      @media screen and (min-width: 768px) {
+        body {
+          font-size: 1.3em;
+        }
 
+        .questionBox {
+          font-size: 1.3em;
+        }
+
+        .question {
+          font-size: 1.3em;
+        }
+
+        .option {
+          font-size: 1.2em;
+          padding: 15px 15px 15px 35px;
+          margin: 25px 0;
+        }
+
+        .btn {
+          font-size: 1.2em;
+        }
+
+        #rangeSelect {
+          font-size: 1.3em;
+        }
+
+        #result,
+        #status,
+        #startScreen {
+          font-size: 1.2em;
+        }
+
+        .questionNumber {
+          font-size: 1.1em;
+        }
+
+        #quizContainer {
+          width: 100%;
+          margin: 20px 40px;
+          height: 100%;
+          background: white;
+          border-radius: 10px;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        body {
+          font-size: 1em;
+          background: white;
+          font-family: Arial, sans-serif;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+        }
+
+        #quizContainer {
+          width: 600px;
+          margin: 20px;
+
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .questionBox,
+        .question,
+        .option,
+        .btn,
+        #rangeSelect,
+        #result,
+        #status,
+        #startScreen,
+        .questionNumber {
+          font-size: 1em;
+        }
+      }
+
+      /* Font family styles */
       .platypi {
         font-family: "Platypi", serif;
         font-optical-sizing: auto;
@@ -40,37 +120,24 @@
         font-style: normal;
       }
 
-      #quizContainer {
-        width: 600px;
-        margin: 20px;
-
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-      }
-
       .questionBox {
         padding: 6px;
-        font-size: 1.2em;
         width: 100%;
       }
 
       .questionNumber {
         font-weight: bold;
-        font-size: 18px;
         margin-bottom: 10px;
-        color: #444;
+        color: #3c763d;
       }
 
       .question {
-        font-size: 1.2em;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .option {
-        padding: 12px 12px 12px 20px;
-        margin: 12px 0;
+        padding: 15px 15px 15px 35px;
+        margin: 15px 0;
         border: 2px solid #ddd;
         border-radius: 50px;
         cursor: default;
@@ -83,7 +150,6 @@
       }
 
       #status {
-        /* margin-top: 250px; */
         font-style: italic;
         color: #555;
         text-align: center;
@@ -92,12 +158,13 @@
       #result {
         display: none;
         text-align: center;
-        font-size: 22px;
-        /* margin-top: 30px; */
         padding: 20px;
         border-radius: 10px;
-        background: #dff0d8;
         color: #3c763d;
+      }
+
+      #result h1 {
+        font-size: 1.5em;
       }
 
       .slide-out-right-fade {
@@ -136,7 +203,6 @@
       }
 
       .btn {
-        font-size: 24px;
         background: none;
         border: none;
         cursor: pointer;
@@ -145,7 +211,7 @@
         background: #3c763d;
         color: white;
         border-radius: 50px;
-        padding: 6px 20px;
+        padding: 12px 50px;
       }
 
       #startScreen {
@@ -154,7 +220,6 @@
 
       #rangeSelect {
         padding: 10px;
-        font-size: 16px;
       }
     </style>
   </head>
@@ -188,7 +253,7 @@
       </div>
 
       <div id="result" class="platypi">
-        <div class="platypi">Quiz Completed.</div>
+        <h1 class="platypi">Quiz Completed.</h1>
         <br />
         <button onclick="restartQuiz()" class="platypi btn">
           Take Quiz Again
