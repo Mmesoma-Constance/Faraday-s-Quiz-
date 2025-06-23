@@ -27,29 +27,29 @@
       /* Responsive: Reduce font size on larger screens */
       @media screen and (min-width: 768px) {
         body {
-          font-size: 1.3em;
+          font-size: 1.5em;
         }
 
         .questionBox {
-          font-size: 1.3em;
+          font-size: 1.5em;
         }
 
         .question {
-          font-size: 1.3em;
+          font-size: 1.5em;
         }
 
         .option {
-          font-size: 1.2em;
+          font-size: 1.3em;
           padding: 15px 15px 15px 35px;
           margin: 25px 0;
         }
 
         .btn {
-          font-size: 1.2em;
+          font-size: 1.3em;
         }
 
         #rangeSelect {
-          font-size: 1.3em;
+          font-size: 1.5em;
         }
 
         #result,
@@ -305,7 +305,6 @@
       let timers = [];
 
       const labels = ["A", "B", "C", "D", "E"];
-
       const quizContainer = document.getElementById("quizContainer");
       const questionBox = document.getElementById("questionBox");
       const status = document.getElementById("status");
@@ -317,6 +316,20 @@
       const toggleIcon = toggleBtn.querySelector("i");
       const muteBtn = document.getElementById("muteBtn");
       const muteIcon = muteBtn.querySelector("i");
+
+      let selectedVoice = null;
+
+      function loadVoices() {
+        const voices = speechSynthesis.getVoices();
+        selectedVoice =
+          voices.find((v) =>
+            /david|google us english male|english male/i.test(v.name)
+          ) || voices.find((v) => v.lang === "en-US");
+      }
+
+      // Some browsers load voices asynchronously
+      speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices(); // Call initially as well
 
       function speak(text, callback = null) {
         if (muted) {
@@ -331,6 +344,9 @@
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.rate = 1;
         utterance.lang = "en-US";
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
         utterance.onend = () => callback && callback();
         speechSynthesis.speak(utterance);
       }
@@ -346,9 +362,8 @@
           <div class="question">${q.question}</div>
           ${q.options
             .map(
-              (opt, i) => `
-            <div class="option" id="opt-${i}"><strong>${labels[i]}.</strong> ${opt}</div>
-          `
+              (opt, i) =>
+                `<div class="option" id="opt-${i}"><strong>${labels[i]}.</strong> ${opt}</div>`
             )
             .join("")}
         `;
@@ -386,7 +401,6 @@
 
       function playQuiz(index) {
         if (pause) return;
-
         if (index >= selectedQuestions.length) {
           showFinalScore();
           return;
@@ -442,7 +456,7 @@
         const [start, end] = rangeSelect.value.split("-").map(Number);
         selectedQuestions = allQuestions.slice(start, end + 1);
         startScreen.style.display = "none";
-        muteBtn.style.display = "none"; // ✅ Hide mute button during quiz
+        muteBtn.style.display = "none";
         controls.style.display = "block";
         questionBox.style.display = "block";
         resultBox.style.display = "none";
@@ -458,7 +472,7 @@
       function restartQuiz() {
         resultBox.style.display = "none";
         startScreen.style.display = "block";
-        muteBtn.style.display = "inline-block"; // ✅ Show mute button again
+        muteBtn.style.display = "inline-block";
         status.textContent = "";
       }
     </script>
